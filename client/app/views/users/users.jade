@@ -1,0 +1,22 @@
+section(ng-controller="UserController as userCtrl")
+    h3 {{userCtrl.title}}
+        a(href="#/users/add" title="Agregar" class="pull-right"): span.glyphicon.glyphicon-plus
+    table.table.table-striped.table-hover
+        thead
+            tr
+                th #
+                th Nombre
+                th Apellido
+                th Nombre usuario
+                th
+        tbody
+            tr(ng-repeat="user in userCtrl.users")
+                td {{user._id}}
+                td {{user.firstName}}
+                td {{user.lastName}}
+                td {{user.username}}
+                td
+                    a(href="#/users/show/{{user.username}}" title="Detalles"): span.glyphicon.glyphicon-eye-open &nbsp
+                    a(href="#/users/edit/{{user.username}}" title="Editar"): span.glyphicon.glyphicon-edit &nbsp
+                    a(href="#/users/remove/{{user.username}}" title="Eliminar"): span.glyphicon.glyphicon-remove
+

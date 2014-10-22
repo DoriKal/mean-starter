@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    div(ng-app="#{name}")
+        nav(class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavigationController as navigation")
+            div.container
+                div.navbar-header
+                    a(class="navbar-brand" href="#/") #{title}
+                div(class="collapse navbar-collapse")
+                    ul.nav.navbar-nav
+                        li: a(href="/database") MongoDB
+                        li: a(href="#/users") Usuarios
+                    ul.nav.navbar-nav.navbar-right
+                        li: a(href="#/profile/#{user.username}" title="profile") <span class="glyphicon glyphicon-user"></span> Perfil
+                        li: a(href="/logout" title="logout") <span class="glyphicon glyphicon-log-out"></span> Salir
+                    p.navbar-text.navbar-right Bienvenido #{user.firstName}
+
+        // Solo si esta autenticado cargamos la aplicación angular
+        main.container
+            ng-view
+
+        hr
+        footer
+            div.container
+                p: small(class="text-muted") &copy; #{title} 2014
+
+        script(type="text/javascript").
+            var appName = '#{name}';
+        script(type="text/preloaded" name="app").
+            {"title":"#{title}"}
+        script(type="text/preloaded" name="user").
+            {
+                "username":"#{user.username}",
+                "firstname":"#{user.firstName}"
+            }
+
+        script(src="vendor/js/jquery.js")
+        //script(src="vendor/js/bootstrap.js")
+        script(src="vendor/js/angular.js")
+        script(src="vendor/js/angular-resource.js")
+        script(src="vendor/js/angular-route.js")
+        script(src="vendor/js/angular-preloaded.js")
+        script(src="app/index.js")
+        script(src="app/index/NavigationController.js")
+        script(src="app/index/HomeController.js")
+        script(src="app/users/UserController.js")
+        script(src="app/users/ProfileController.js")
+        script(src="app/users/UserFactory.js")
+        //script(src="js/plugins.js")
+        //script(src="js/main.js")
