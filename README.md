@@ -26,15 +26,15 @@ Instalación
 
 - Clonar el repositorio y moverse dentro de la carpeta creada.
 - Ejecutar los siguientes comandos para instalar los componentes y dependencias. 
-***sh
+```sh
 npm install
 bower install
-***
+```
 - Para DEVELOPMENT, ejecutar:
-***sh 
+```sh 
 grunt development (ejecuta las tareas de development como copiar archivos, compilar jade)
 grunt server
-*** 
+``` 
 
 
 Estructura del proyecto
