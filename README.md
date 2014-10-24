@@ -1,11 +1,16 @@
 mean-starter
 ============
 
-MEAN-Starter es un base para iniciar el desarrollo de aplicaciones web con MongoDB, Express, AngularJS, Node + Grunt, Bootstrap, Boilerplate, Passport ...
+**ESTA VERSION ESTA EN DESARROLLO**
 
-Esta versión esta basada en parte en meanjs y meanio.
+MEAN-Starter es una base para el desarrollo de aplicaciones web con MongoDB, Express, AngularJS, Node + Grunt, Bootstrap, Boilerplate, Passport ...
 
-¡ESTA VERSION SE ENCUENTRA AÚN EN DESARROLLO!
+Este proyecto esta basado en parte en otros proyectos como meanjs y meanio y en la documentación de Best Practices y Style Guide .
+
+La idea es utilizar MEAN-Starter como un punto de partida para el desarrollo un nuevo proyecto web con las tecnologías JS antes mencionadas... 
+
+
+
 
 Requerimientos
 --------------
@@ -21,11 +26,15 @@ Instalación
 
 - Clonar el repositorio y moverse dentro de la carpeta creada.
 - Ejecutar los siguientes comandos para instalar los componentes y dependencias. 
-    - npm install
-    - bower install
-- Para DEVELOPMENT, ejecutar: 
-    - grunt development (ejecuta las tareas de development como copiar archivos, compilar jade)
-    - grunt server 
+***sh
+npm install
+bower install
+***
+- Para DEVELOPMENT, ejecutar:
+***sh 
+grunt development (ejecuta las tareas de development como copiar archivos, compilar jade)
+grunt server
+*** 
 
 
 Estructura del proyecto
@@ -40,7 +49,7 @@ Estructura del proyecto
         - tests/
     - client/             -> aplicación cliente
         - app/            -> modulos de AngularJS
-            - [module]/ 	-> carperta por cada módulo que contiene archivos como my_module.controller.js, my_module.services.js, my_module.directives,js)
+            - my_module/   -> carperta por cada módulo que contiene archivos como my_module.controller.js, my_module.services.js, my_module.directives,js)
             - views/          
         - less/
     - config/             -> configuración de la aplicación servidor
@@ -56,8 +65,8 @@ Estructura del proyecto
     - bower_components/
 
 
-Crear un projecto desde cero
-----------------------------
+Para crear este projecto
+------------------------
 
 Requerimientos
 
