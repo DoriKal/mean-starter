@@ -2,6 +2,12 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        clean: {
+            development: {
+                src: [ 'public/app', 'public/css' , 'public/js' ]
+            }
+        },
+
         bower: {
             development: {
                 dest: 'public/vendor/',
@@ -108,10 +114,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
 
     grunt.registerTask('development', 'Executa las tareas necesarias para development',
-        ['bower:development', 'jade:development', 'less:development', 'copy:development']);
+        ['clean:development', 'bower:development', 'jade:development', 'less:development', 'copy:development']);
 
     grunt.registerTask('server', 'Executa el servidor en modo development', ['concurrent:development']);
 

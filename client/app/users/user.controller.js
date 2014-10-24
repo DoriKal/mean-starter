@@ -12,7 +12,7 @@
         var vm = this;
 
         vm.activate = activate;
-        vm.title = 'Users';
+        vm.title = 'Usuario';
 
         vm.users = UserFactory.apiData().query();
 

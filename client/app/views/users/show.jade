@@ -1,18 +1,18 @@
-section(class="container" ng-controller="UserShowController as userShowCtrl")
+section(class=" container login" ng-controller="UserController as userCtrl")
     div.row
         div.col-sm-6.col-md-4.col-md-offset-4
-            h3 Detalle {{userShowCtrl.title}}
+            h3 Mostrar {{userCtrl.title}}
             table.table
                 tbody
                     tr
                         td Id
-                        td {{userShowCtrl.user._id}}
+                        td {{userCtrl.user._id}}
                     tr
                         td Nombre
-                        td {{userShowCtrl.user.firstName}}
+                        td {{userCtrl.user.firstName}}
                     tr
                         td Apellido
-                        td {{userShowCtrl.user.lastName}}
+                        td {{userCtrl.user.lastName}}
                     tr
                         td Usuario
-                        td {{userShowCtrl.user.username}}
+                        td {{userCtrl.user.username}}
