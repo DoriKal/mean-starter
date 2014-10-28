@@ -14,7 +14,7 @@
         vm.activate = activate;
         vm.title = 'Profile';
 
-        vm.user = UserFactory.apiData().get({username:$routeParams.username});
+        //vm.user = UserFactory.apiData().get({username:$routeParams.username});
 
         activate();
 
@@ -22,5 +22,9 @@
 
         function activate() {
         }
+
+
+
+
     }
 })();

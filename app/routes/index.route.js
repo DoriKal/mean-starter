@@ -30,6 +30,8 @@ module.exports = function (router, passport, roles) {
             req.logout();
             res.redirect('/');
         });
+
+
 }
 
 

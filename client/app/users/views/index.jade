@@ -1,0 +1,85 @@
+section()
+    h3 Lista de {{usersCtrl.title}}
+        a(title="Agregar" class="pull-right" data-toggle="modal" data-target="#createModal" ng-click="usersCtrl.selectUser('')"): span.glyphicon.glyphicon-plus
+        //button(class="btn btn-primary pull-right" data-toggle="modal" data-target="#createModal"): span.glyphicon.glyphicon-plus
+    table.table.table-hover
+        thead
+            tr
+                th: span.glyphicon.glyphicon-pushpin
+                th Id
+                th Usuario
+                th Nombre
+                th Apellido
+                th
+        tbody
+            tr(ng-repeat="user in usersCtrl.users" ng-click="usersCtrl.selectUser(user.username)" ng-class="{info:usersCtrl.isUserSelected(user.username)}")
+                td: span(class="glyphicon glyphicon-ok" ng-show="usersCtrl.isUserSelected(user.username)")
+                td {{user._id}}
+                td {{user.username}}
+                td {{user.firstName}}
+                td {{user.lastName}}
+                td
+                    a(href="#/users/{{user.username}}" title="Detalles"): span.glyphicon.glyphicon-eye-open &nbsp
+                    a(title="Editar" data-toggle="modal" data-target="#updateModal"): span.glyphicon.glyphicon-edit &nbsp
+                    a(title="Eliminar" data-toggle="modal" data-target="#removeModal"): span.glyphicon.glyphicon-remove
+
+
+    // Modal
+    div(class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true" )
+        div.modal-dialog
+            div.modal-content
+                form(class="form-horizontal" role="form" ng-submit="usersCtrl.create()")
+                    div.modal-header
+                        button(type="button" class="close" data-dismiss="modal")
+                            span(aria-hidden="true") &times
+                                span(class="sr-only") Close
+                        h3(class="modal-title" id="createModalLabel") Modal title
+                    div(class="modal-body")
+                        div(class="alert alert-danger" role="alert" ng-show="usersCtrl.messageModal !== ''") {{usersCtrl.messageModal}}
+                        input(type='text', name='username', class='form-control', placeholder='Username',required, autofocus, ng-model="usersCtrl.user.username")
+                        input(type='email', name='email', class='form-control', placeholder='Email',required, ng-model="usersCtrl.user.email")
+                        input(type='text', name='firstName', class='form-control', placeholder='First Name',required, ng-model="usersCtrl.user.firstName")
+                        input(type='text', name='lastName', class='form-control', placeholder='Last Name',required, ng-model="usersCtrl.user.lastName")
+                        input(type='password', name='password', class='form-control nomargin', placeholder='Password', required, ng-model="usersCtrl.user.password")
+                    div(class="modal-footer")
+                        button(type="button" class="btn btn-default" data-dismiss="modal") Cerrar
+                        button(type="submit" class="btn btn-primary") Guardar Cambios
+
+
+    // Modal
+    div(class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" )
+        div.modal-dialog
+            div.modal-content
+                form(class="form-horizontal" role="form" ng-submit="usersCtrl.update()")
+                    div.modal-header
+                        button(type="button" class="close" data-dismiss="modal")
+                            span(aria-hidden="true") &times
+                                span(class="sr-only") Close
+                        h3(class="modal-title" id="createModalLabel") Editar Usuario
+                    div(class="modal-body")
+                        div(class="alert alert-danger" role="alert" ng-show="usersCtrl.messageModal !== ''") {{usersCtrl.messageModal}}
+                        input(type='text', name='username', class='form-control', placeholder='Username',required, disabled, ng-model="usersCtrl.user.username")
+                        input(type='email', name='email', class='form-control', placeholder='Email',required, autofocus, ng-model="usersCtrl.user.email")
+                        input(type='text', name='firstName', class='form-control', placeholder='First Name',required, ng-model="usersCtrl.user.firstName")
+                        input(type='text', name='lastName', class='form-control', placeholder='Last Name',required, ng-model="usersCtrl.user.lastName")
+                        input(type='password', name='password', class='form-control nomargin', placeholder='Password', required, ng-model="usersCtrl.user.password")
+                    div(class="modal-footer")
+                        button(type="button" class="btn btn-default" data-dismiss="modal") Cerrar
+                        button(type="submit" class="btn btn-primary") Guardar Cambios
+
+    // Modal
+    div(class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true" )
+        div.modal-dialog
+            div.modal-content
+                form(class="form-horizontal" role="form" ng-submit="usersCtrl.remove()")
+                    div.modal-header
+                        button(type="button" class="close" data-dismiss="modal")
+                            span(aria-hidden="true") &times
+                                span(class="sr-only") Close
+                        h3(class="modal-title" id="createModalLabel") Eliminar usuario
+                    div(class="modal-body")
+                        div(class="alert alert-danger" role="alert" ng-show="usersCtrl.messageModal !== ''") {{usersCtrl.messageModal}}
+                        p ¿Desea eliminar el usuario {{usersCtrl.userSelected}}?
+                    div(class="modal-footer")
+                        button(type="button" class="btn btn-default" data-dismiss="modal") Cerrar
+                        button(type="submit" class="btn btn-primary") Eliminar

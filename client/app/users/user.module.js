@@ -5,22 +5,25 @@
         .config(function ($routeProvider) {
             $routeProvider
                 .when('/users', {
-                    templateUrl:'app/views/users/users.html'
+                    controller:'UsersController',
+                    controllerAs:'usersCtrl',
+                    templateUrl:'app/users/views/index.html'
                 })
                 .when('/users/add', {
-                    templateUrl: 'app/views/users/add.html'
+                    templateUrl: 'app/users/views/add.html'
                 })
-                .when('/users/show/:username', {
-                    templateUrl: 'app/views/users/show.html'
+                .when('/users/:username', {
+                    templateUrl: 'app/users/views/show.html'
                 })
-                .when('/users/remove/:username', {
-                    templateUrl: 'app/views/users/remove.html'
+                .when('/users/:username/remove', {
+                    templateUrl: 'app/users/views/remove.html'
                 })
-                .when('/users/edit/:username', {
-                    templateUrl: 'app/views/users/edit.html'
+                .when('/users/:username/edit', {
+                    templateUrl: 'app/users/views/edit.html'
                 })
                 .when('/profile/:username', {
-                    templateUrl: 'app/views/users/profile.html'
+                    templateUrl: 'app/users/views/profile.html'
                 });
-        });
+        })
+
 })();

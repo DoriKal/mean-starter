@@ -5,8 +5,6 @@
  */
 var _ = require('underscore');
 var passport = require('passport');
-var ConnectRoles = require('connect-roles');
-
 
 /**
  *
@@ -17,44 +15,7 @@ module.exports = function (app, express) {
 
     var router = express.Router();
 
-    /**
-     * Definimos los roles para las rutas
-     */
-    var roles = new ConnectRoles({
-        failureHandler : function (req, res, action) {
-
-            console.log(req.headers);
-            if (req.xhr) {
-                res.send(403);
-            } else {
-                res.render('errors/403', {action: action});
-            }
-
-        }
-    });
-    app.use(roles.middleware());
-
-
-
-    // controla los acceso publicos como el index, login, y register
-    roles.use(function (req, action) {
-//        console.log(req.path);
-        console.log('role: ' + action);
-        if (action === 'homepage') {
-            return true;
-        }
-        if (!req.isAuthenticated()) {
-            return action === 'public access';
-        }
-    });
-
-    // esto puede ser un contro general para acceso privado pero no necesariamente por role de usuario
-    roles.use('private access', function (req) {
-        console.log('role: private access');
-        console.log(req.user);
-        return true;
-    })
-
+    var roles = require('./roles')(app);
 
     /**
      * Carga los valores en el res.locals
@@ -74,6 +35,31 @@ module.exports = function (app, express) {
     require('../app/routes/index.route')(router, passport, roles);
     require('../app/routes/auth.route')(router, passport, roles);
     require('../app/routes/user.route')(router, passport, roles);
+
+
+    router.route('/error')
+        .get(function (req, res, next) {
+            var err = new Error('Usuario ya existe');
+            //err.message = 'Mensaje';
+            //err.code = '900';
+            //err.name = 'ApplicationError';
+            //err.status = 405;
+            next(err);
+        }).post(function (req, res, next) {
+            var err = new Error('error por ajax');
+            next(err);
+        });
+
+    /**
+     * Cuando no se encuentra una ruta se envia error 404
+     */
+    router.use(function (req, res, next) {
+        var err = new Error();
+        err.status = 404;
+        err.message = 'Página no encontrada';
+        next(err);
+    });
+
 
     /**
      * Encapsula las rutas en un único objeto lo que nos permite aislar la funcionalidad

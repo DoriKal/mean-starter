@@ -1,18 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module(appName)
-        .controller('HomeController', HomeController);
+    angular.module('app.dashboard')
+        .controller('DashboardController', DashboardController);
 
     //HomeController.$inject = ['$scope'];
 
     /* @ngInject */
-    function HomeController() {
+    function DashboardController() {
         /* jshint validthis: true */
         var vm = this;
 
         vm.activate = activate;
-        vm.title = 'HomeController';
+        vm.title = 'Panel de Control';
 
         activate();
 
