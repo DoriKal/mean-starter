@@ -84,10 +84,14 @@ Tareas
     - bower install jquery --save
     - bower install bootstrap --save
     - bower install angularjs --save
+    - bower install angular-animate --save
     - bower install angular-resource --save
     - bower install angular-preloaded --save    -> para variables desde el servidor a angular
     - bower install angular-route --save
+    - bower install toastr --save   -> muestra las notificaciones
+    - bower install ng-notify --save    -> muestra las notificaciones
     - npm install mongoose --save
+    - npm install mongoose-validators --save -> validaciones para mongoose
     - npm install passport --save
     - npm install passport-local --save
     - npm install express-session --save

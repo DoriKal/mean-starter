@@ -1,9 +1,15 @@
 var util = require('../helpers/util');
 var User = require('../models/user.model');
 
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.create = function (req, res, next) {
 
-    User.findOne({'username': req.body.username}, function (err, user) {
+    User.findByUsername(req.body.username, function (err, user) {
         if (err) return next(err);
         if (user) {
             return next(new Error('Usuario ya existe'));
@@ -18,43 +24,59 @@ exports.create = function (req, res, next) {
         // save the user
         newUser.save(function (err) {
             if (err) return next(err);
-            res.status(201).send();
+            res.status(201).end();
         });
     });
 };
 
 exports.modify = function (req, res, next) {
-    User.update({username: req.params.username}, req.body, function (err) {
-        if (err) return next(err);
-        res.status(200).end();
-    });
-    //User.findOne({'username': req.param('username')}, function (err, user) {
+    //User.update({username: req.params.username}, req.body, function (err) {
     //    if (err) return next(err);
-    //    if (!user) {
-    //        return next(new Error('User not found'));
-    //    }
-    //    user.update(function (err) {
-    //        if (err) return next(err);
-    //        res.status(200).send();
-    //    })
+    //    res.status(200).end();
     //});
-};
-
-exports.remove = function (req, res, next) {
-    User.findOne({'username': req.param('username')}, function (err, user) {
+    console.log(req.body);
+    User.findByUsername(req.param('username'), function (err, user) {
         if (err) return next(err);
         if (!user) {
             return next(new Error('User not found'));
         }
-        user.remove(function (err) {
+
+        user.email = req.body.email;
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.roles = req.body.roles;
+        user.save(function (err) {
             if (err) return next(err);
-            res.status(200).send();
+            res.status(200).end();
         })
     });
 };
 
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.remove = function (req, res, next) {
+    User.findByUsername(req.param('username'), function (err, user) {
+        if (err) return next(err);
+        if (!user) return next(new Error('Usuario no encontrado'));
+        user.remove(function (err) {
+            if (err) return next(err);
+            res.status(200).end();
+        })
+    });
+};
+
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.findByUsername = function (req, res, next) {
-    User.findOne({'username': req.param('username')}, function (err, user) {
+    User.findByUsername(req.param('username'), function (err, user) {
         if (err) return next(err);
         if (!user) {
             return next(new Error('User not found'));
@@ -63,9 +85,18 @@ exports.findByUsername = function (req, res, next) {
     });
 };
 
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.findAll = function (req, res, next) {
     User.find(function (err, users) {
         if (err) return next(err);
         res.status(200).send(users);
     });
 };
+
+
+

@@ -8,10 +8,9 @@ module.exports = function (app) {
         failureHandler: function (req, res, action) {
             var error = {
                 status: 403,
-                message: '¡Lo sentimos, pero o puede acceder sin permiso!',
+                message: 'No tiene permisos!',
                 name: 'ApplicationError',
                 stack: (process.env.NODE_ENV === 'development') ? 'role: ' + action : {}
-
             };
             if (req.xhr) {
                 res.status(403).send({error: error})
@@ -20,12 +19,12 @@ module.exports = function (app) {
             }
         }
     });
-    app.use(roles.middleware());
 
+    app.use(roles.middleware());
 
     // controla los acceso publicos como el index, login, y register
     roles.use(function (req, action) {
-        console.log('by action: role: ' + action + ' - ' + req.path) ;
+        console.log('by action: role: ' + action + ' - ' + req.path);
         if (action === 'homepage') {
             return true;
         }

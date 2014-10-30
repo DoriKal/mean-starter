@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.user', ['ngRoute'])
+    angular.module('app.user', ['ngRoute', 'ngNotify'])
         .config(function ($routeProvider) {
             $routeProvider
                 .when('/users', {

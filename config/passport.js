@@ -3,15 +3,22 @@ var util = require('../app/helpers/util');
 var User = require('../app/models/user.model');
 var LocalStrategy = require('passport-local').Strategy
 
+/**
+ *
+ * @param app
+ */
 module.exports = function (app) {
 
-    // Passport session setup.
-    // Serialize sessions
+    /*
+     * Serialize sessions
+     */
     passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
-    // Deserialize sessions
+    /*
+     * Deserialize sessions
+     */
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
             done(err, user);
@@ -19,8 +26,10 @@ module.exports = function (app) {
     });
 
 
-    // Use the LocalStrategy within Passport.
-    passport.use('login', new LocalStrategy(
+    /*
+     * Use the LocalStrategy within Passport.
+     */
+    passport.use('signin', new LocalStrategy(
         function (username, password, done) {
             // asynchronous verification, for effect...
             process.nextTick(function () {
@@ -30,10 +39,10 @@ module.exports = function (app) {
                         return done(err);
                     }
                     if (!user) {
-                        return done(null, false, { message: 'Incorrect username.' });
+                        return done(null, false, {message: 'Incorrect username.'});
                     }
                     if (!util.isValidPassword(user.password, password)) {
-                        return done(null, false, { message: 'Incorrect password.' });
+                        return done(null, false, {message: 'Incorrect password.'});
                     }
                     return done(null, user);
                 })
@@ -41,7 +50,10 @@ module.exports = function (app) {
         }
     ));
 
-    // Use the LocalStrategy within Passport.
+
+    /*
+     * Usamos LocalStrategy para crear el usuario
+     */
     passport.use('signup', new LocalStrategy({passReqToCallback: true}, function (req, username, password, done) {
             // asynchronous verification, for effect...
             process.nextTick(function () {
@@ -53,7 +65,7 @@ module.exports = function (app) {
                         }
                         // already exists
                         if (user) {
-                            return done(null, false, { message: 'Usuario ya existe' });
+                            return done(null, false, {message: 'Usuario ya existe'});
                         } else {
                             // if there is no user with that email
                             // create the user
@@ -67,7 +79,10 @@ module.exports = function (app) {
 
                             // save the user
                             newUser.save(function (err) {
-                                if (err) {throw err;}
+                                if (err) {
+                                    return done(null, false, {message: 'No se pudo crear el usuario.'});
+                                    //throw err;
+                                }
                                 return done(null, newUser);
                             });
                         }

@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var _ = require('underscore');
-var passport = require('passport');
 
 /**
  *
@@ -32,14 +31,14 @@ module.exports = function (app, express) {
      * Define las rutas para cada modulo de la aplicación
      * Este modo de implementación mejora la lectura del código y facilita el activar/desactivar cada módulo
      */
-    require('../app/routes/index.route')(router, passport, roles);
-    require('../app/routes/auth.route')(router, passport, roles);
-    require('../app/routes/user.route')(router, passport, roles);
+    require('../app/routes/index.route')(router);
+    require('../app/routes/auth.route')(router);
+    require('../app/routes/user.route')(router, roles);
 
 
     router.route('/error')
         .get(function (req, res, next) {
-            var err = new Error('Usuario ya existe');
+            var err = new Error('Error controlado');
             //err.message = 'Mensaje';
             //err.code = '900';
             //err.name = 'ApplicationError';

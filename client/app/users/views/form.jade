@@ -1,0 +1,21 @@
+form(class="form-horizontal" role="form" ng-submit="usersCtrl.save()")
+    input(type='text' name='username' class='form-control disabled' placeholder='Username' required autofocus
+        ng-model="usersCtrl.user.username" ng-disabled="usersCtrl.action==='edit'")
+    input(type='password' name='password' class='form-control' placeholder='Password' required ng-model="usersCtrl.user.password")
+    input(type='text' name='firstName' class='form-control' placeholder='First Name' required ng-model="usersCtrl.user.firstName")
+    input(type='text' name='lastName' class='form-control' placeholder='Last Name' required ng-model="usersCtrl.user.lastName")
+    input(type='email' name='email' class='form-control' placeholder='Email' required ng-model="usersCtrl.user.email")
+    div.checkbox
+        label.checkbox-inline Roles:
+        label.checkbox-inline
+            input(type="checkbox" name="roles" ng-model="usersCtrl.user.roles" ng-true-value="'public'")
+            | Público
+        label.checkbox-inline
+            input(type="checkbox" name="roles" ng-model="usersCtrl.user.roles" ng-true-value="'admin'")
+            | Administrador
+
+    br
+    div.text-right
+        button(type="button" class="btn btn-default" ng-click="usersCtrl.cancel()") Cancelar
+        button(type="submit" class="btn btn-primary") Guardar
+                         

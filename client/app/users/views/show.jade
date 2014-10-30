@@ -1,18 +1,17 @@
-section(class=" container login" ng-controller="UserController as userCtrl")
-    div.row
-        div.col-sm-6.col-md-4.col-md-offset-4
-            h3 Mostrar {{userCtrl.title}}
-            table.table
-                tbody
-                    tr
-                        td Id
-                        td {{userCtrl.user._id}}
-                    tr
-                        td Nombre
-                        td {{userCtrl.user.firstName}}
-                    tr
-                        td Apellido
-                        td {{userCtrl.user.lastName}}
-                    tr
-                        td Usuario
-                        td {{userCtrl.user.username}}
+table.table
+    tbody
+        tr
+            td Id
+            td {{usersCtrl.user._id}}
+        tr
+            td Usuario
+            td {{usersCtrl.user.username}}
+        tr
+            td Nombre
+            td {{usersCtrl.user.firstName}}
+        tr
+            td Apellido
+            td {{usersCtrl.user.lastName}}
+        tr
+            td Roles
+            td {{usersCtrl.user.roles}}

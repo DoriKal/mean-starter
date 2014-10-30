@@ -2,12 +2,9 @@
     'use strict';
 
     angular.module('app.user')
-        .controller('UsersController', UsersController);
-        //.controller('UserController', UserController);
+        .controller('UserController', UserController);
 
-    UsersController.$inject = ['dataservice'];
-
-    UserController.$inject = ['dataservice', '$routeParams'];
+    UserController.$inject = ['dataservice'];
 
 
     /* @ngInject */
@@ -60,7 +57,7 @@
         var vm = this;
 
         vm.activate = activate;
-        vm.title = 'User';
+        vm.title = 'Usuario';
 
         activate();
 

@@ -1,13 +1,19 @@
+/**
+ *
+ * @param app
+ */
 module.exports = function (app) {
 
-
-    /**
+    /*
      * intercepta cualquier error para su procesamiento
      */
     app.use(function (err, req, res, next) {
         // muestra por consola cualquier error producido
+        console.log(err);
         if ('ValidationError' === err.name) {
             err.status = 400;
+            // TODO: recorrer el objeto err.errors y de cada propiedad encontrada obtener el message
+
         } else if ('MongoError' === err.name) {
             err.status = 400;
         } else if ('SyntaxError' === err.name) {
@@ -21,12 +27,11 @@ module.exports = function (app) {
         next(err);
     });
 
-    /**
+    /*
      * Envía el error dependiendo del tipo de petición
      */
     app.use(function (err, req, res, next) {
-        //var error = (process.env.NODE_ENV === 'development') ? err : {};
-        // Si la petición es ajax
+
         var error = {
             status: err.status,
             name: err.name,
@@ -39,7 +44,7 @@ module.exports = function (app) {
         res.format({
             html: function () {
                 console.log('by normal: ' + req.path);
-                res.render('error', {error: error});
+                res.status(err.status).render('error', {error: error});
             },
             json: function () {
                 console.log('by ajax: ' + req.path);
@@ -47,13 +52,6 @@ module.exports = function (app) {
             }
         });
 
-        //if (req.xhr) {
-        //    console.log('by ajax: ' + req.path);
-        //    res.status(err.status).send({error: error})
-        //} else {
-        //    console.log('by normal: ' + req.path);
-        //    res.render('error', {error: error});
-        //}
     });
 
 

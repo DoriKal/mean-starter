@@ -1,9 +1,11 @@
 (function () {
     "use strict";
 
-    angular.module(appName, [
-        'ngRoute',
-        'ngResource'
+    angular.module('app', [
+        /*
+         * Módulos de angular de uso general
+         */
+        'ngAnimate',
         /*
          * Módulos de la Aplicación
          */

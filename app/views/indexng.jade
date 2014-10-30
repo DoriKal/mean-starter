@@ -1,28 +1,42 @@
 extends layout
 
 block content
-    div(ng-app="#{name}")
+    div(ng-app="app")
         nav(class="navbar navbar-inverse navbar-fixed-top" role="navigation")
             div.container
                 div.navbar-header
                     a(class="navbar-brand" href="#/") #{title}
                 div(class="collapse navbar-collapse")
                     ul.nav.navbar-nav
-                        li: a(href="/database") MongoDB
-                        li: a(href="#/users") Usuarios
+                        //li: a(href="/database") MongoDB
+                        //li: a(href="") Usuarios
                     ul.nav.navbar-nav.navbar-right
                         li: a(href="#/profile/#{user.username}" title="profile") <span class="glyphicon glyphicon-user"></span> Perfil
-                        li: a(href="/logout" title="logout") <span class="glyphicon glyphicon-log-out"></span> Salir
+                        li: a(href="/signout" title="signout") <span class="glyphicon glyphicon-log-out"></span> Salir
                     p.navbar-text.navbar-right Bienvenido #{user.firstName}
 
         // Solo si esta autenticado cargamos la aplicación angular
-        main.container
-            ng-view
+        div.container-fluid
+            div.row
+                aside.col-sm-3.col-md-2
+                    hr
+                    ul.nav
+                        li.active: a(href="/database") MongoDB
+                        li.active: a(href="#/users") Usuarios
+                    hr
+                    ul.nav
+                        li.active: a(href="#") Overview
+                        li.active: a(href="#") Reports
+                        li.active: a(href="#") Analytics
+                        li.active: a(href="#") Export
+                    hr
+                    footer
+                        div.container
+                            p: small(class="text-muted") &copy; #{title} 2014
 
-        hr
-        footer
-            div.container
-                p: small(class="text-muted") &copy; #{title} 2014
+                main(class="col-sm-9 col-md-10 animate-view" ng-view)
+
+
 
         script(type="text/javascript").
             var appName = '#{name}';
@@ -34,16 +48,26 @@ block content
         //        "firstname":"#{user.firstName}"
         //    }
 
+        // Vendor libraries
         script(src="vendor/js/jquery.js")
         script(src="vendor/js/bootstrap.js")
+        script(src="vendor/js/toastr.js")
+
+        // AngularJS Core libraries
         script(src="vendor/js/angular.js")
+        script(src="vendor/js/angular-animate.js")
         script(src="vendor/js/angular-resource.js")
         script(src="vendor/js/angular-route.js")
+        script(src="vendor/js/ng-notify.js")
         //script(src="vendor/js/angular-preloaded.js")
+
+        // Application
         // Main file
-        script(src="app/main.js")
+        script(src="app/app.module.js")
+
         // Core Module
         script(src="app/core/core.module.js")
+        script(src="app/core/core.config.js")
         script(src="app/core/dataservice.js")
         // Dashboard
         script(src="app/dashboard/dashboard.module.js")

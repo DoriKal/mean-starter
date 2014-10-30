@@ -19,12 +19,17 @@ module.exports = function (app, express) {
 
     if (process.env.NODE_ENV === 'development') {
         app.use(logger('dev'));
+    }
 
-    } else if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production') {
 
     }
 
-    // uncomment after placing your favicon in /public
+    if (process.env.NODE_ENV === 'test') {
+
+    }
+
+
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
 

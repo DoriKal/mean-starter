@@ -9,8 +9,8 @@ block content
             div(class="collapse navbar-collapse")
                 unless isAuthenticated
                     ul.nav.navbar-nav.navbar-right
-                        li: a(href="/signup") Signup
-                        li: a(href="/login") Login
+                        li: a(href="/signup") Registrarse
+                        li: a(href="/signin") Iniciar Sesión
 
     header.container
         h1 Willkommen #{title}!
@@ -22,9 +22,9 @@ block content
         div.container
             p: small(class="text-muted") &copy; #{title} 2014
 
-    //script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
-    //script(window.jQuery||document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>'))
+    // Vendor libraries
     script(src="vendor/js/jquery.js")
-    //script(src="vendor/js/bootstrap.js")
+    script(src="vendor/js/bootstrap.js")
+    script(src="vendor/js/toastr.js")
     //script(src="js/plugins.js")
     //script(src="js/main.js")

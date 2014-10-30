@@ -4,10 +4,10 @@
     angular.module('app.user')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['dataservice', '$routeParams'];
+    UsersController.$inject = ['dataservice', 'ngNotify'];
 
     /* @ngInject */
-    function UsersController(dataservice, $routeParams) {
+    function UsersController(dataservice, ngNotify) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -18,20 +18,22 @@
         vm.users = [];
         vm.user = {};
 
-        vm.userSelected = '';
+        vm.userSelected = undefined;
 
-        vm.message = '';
-        vm.messageModal = '';
+        vm.action = undefined;
 
+        vm.createUser = createUser;
         vm.selectUser = selectUser;
         vm.isUserSelected = isUserSelected;
+
+        vm.save = save
         vm.create = create;
         vm.readAll = readAll;
         vm.update = update;
         vm.remove = remove;
+        vm.cancel = cancel;
 
         activate();
-
 
 
         ////////////////
@@ -40,71 +42,89 @@
             vm.readAll();
         }
 
+        function createUser() {
+            vm.action = 'new';
+            vm.userSelected = undefined;
+            vm.user = {};
+        }
+
         function selectUser(id) {
+            vm.action = 'show';
             vm.userSelected = id;
-            vm.user = dataservice.getUser().get({username:id});
+            vm.user = dataservice.getUser().get({username: id});
         }
 
         function isUserSelected(id) {
             return vm.userSelected === id;
         }
 
-        function create() {
-            console.log(vm.user);
-            var User = dataservice.getUser();
-            User.save(vm.user, function () {
-                console.log('success');
-                vm.user = {};
-                vm.readAll();
-                vm.message = {
-                    type:'success',
-                    text:'Usuario creado con exoto'
-                };
-                closeModal();
-            }, function () {
-                vm.messageModal = 'No se pudo crear el usuario, revise los datos.';
-            });
-
+        function save() {
+            if (vm.action === 'new') {
+                vm.create();
+            } else if (vm.action === 'edit') {
+                vm.update();
+            }
         }
+
 
         function readAll() {
             vm.users = dataservice.getUser().query();
         }
 
-        function update() {
+        function create() {
             var User = dataservice.getUser();
-            User.update({username:vm.userSelected}, vm.user,  function () {
-                console.log('update success');
+            User.save(vm.user, function () {
                 vm.user = {};
                 vm.readAll();
-                vm.message = {
-                    type:'success',
-                    text:'Usuario actualizado con éxito'
-                };
-                closeModal();
-            }, function () {
-                console.log('update error');
-                vm.messageModal = 'No se pudo actualizar el usuario, revise los datos.';
+                vm.action = undefined;
+                ngNotify.set('Usuario creado exitosamente', 'success');
+            }, function (res) {
+                ngNotify.set(res.data.error.message, 'error');
+            });
+
+        }
+
+        function update() {
+            var User = dataservice.getUser();
+            User.update({username: vm.userSelected}, vm.user, function () {
+                vm.user = {};
+                vm.readAll();
+                ngNotify.set('Usuario actualizado exitosamente', 'success');
+            }, function (res) {
+                console.log(res);
+                ngNotify.set(res.data.error.message, 'error');
             });
         }
 
         function remove() {
             var User = dataservice.getUser();
-            User.remove({username:vm.userSelected}, function () {
-                console.log('remove success');
+            User.remove({username: vm.userSelected}, function () {
                 vm.readAll();
                 vm.selectUser();
-                closeModal();
-            }, function () {
-                console.log('remove error');
-                vm.messageModal = 'No se pudo eliminar el usuario, revise los datos.';
+                vm.action = undefined;
+                ngNotify.set('Usuario eliminado correctamente', 'success');
+            }, function (res) {
+                console.log(res);
+                ngNotify.set(res.data.error.message, 'error');
             });
         }
 
+        function cancel() {
+            switch (vm.action) {
+                case 'new':
+                case 'show':
+                    vm.action = undefined;
+                    vm.userSelected = undefined;
+                    vm.user = {};
+                    break;
+                case 'edit':
+                case 'remove':
+                    vm.action = 'show';
+                    break;
 
-        function closeModal() {
-            $('.modal').modal('hide');
+            }
         }
+
 
     }
 
