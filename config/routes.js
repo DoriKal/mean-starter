@@ -14,7 +14,7 @@ module.exports = function (app, express) {
 
     var router = express.Router();
 
-    var roles = require('./roles')(app);
+    //var roles = require('./roles')(app);
 
     /**
      * Carga los valores en el res.locals
@@ -33,19 +33,32 @@ module.exports = function (app, express) {
      */
     require('../app/routes/index.route')(router);
     require('../app/routes/auth.route')(router);
-    require('../app/routes/user.route')(router, roles);
+    require('../app/routes/user.route')(router);
 
-
+    /**
+     * Rutas de prueba, se deben eliminar
+     */
+    router.route('/session')
+        .get(function (req, res, next) {
+            var sess = req.session;
+            if (sess.views) {
+                res.setHeader('Content-Type', 'text/html');
+                res.write('<p>views: ' + sess.views + '</p>');
+                res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>');
+                res.write('<p>views: ' + JSON.stringify(sess) + '</p>');
+                res.end();
+                sess.views++;
+            } else {
+                sess.views = 1;
+                res.end('welcome to the session demo. refresh!');
+            }
+        });
     router.route('/error')
         .get(function (req, res, next) {
             var err = new Error('Error controlado');
-            //err.message = 'Mensaje';
-            //err.code = '900';
-            //err.name = 'ApplicationError';
-            //err.status = 405;
             next(err);
         }).post(function (req, res, next) {
-            var err = new Error('error por ajax');
+            var err = new Error('error post');
             next(err);
         });
 

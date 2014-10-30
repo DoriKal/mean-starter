@@ -2,16 +2,16 @@ var mongoose = require('mongoose');
 
 module.exports = function (app) {
 
-    var conf = app.get('mongodb')
+    var configMongo = app.get('mongodb')
 
     /**
      * Connect to MongoDB
      */
-    mongoose.connect(conf.uri);
+    mongoose.connect(configMongo.url);
 
     // When successfully connected
     mongoose.connection.on('connected', function () {
-        console.log('Mongoose default connection open to ' + conf.uri);
+        console.log('Mongoose default connection open to ' + configMongo.url);
     });
 
     // If the connection throws an error

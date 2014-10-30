@@ -7,10 +7,12 @@ module.exports = {
         description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
         keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
         port: process.env.PORT || 3000,
-        secret: 'me_gusta_mean'
+        secret: 'Me gusta MEAN',
+        maxAge:(1000*60*60)
     },
     mongodb: {
-        uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/mean'
+        dbName:'mean-starter',
+        url: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost:27017/mean-starter'
     },
     aws: {
         accessKeyId: 'KEY',

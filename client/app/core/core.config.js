@@ -28,8 +28,8 @@
         $httpProvider.interceptors.push(function ($q, $window) {
             return {
                 responseError: function (response) {
-                    console.log('Interceptor responseError:');
-                    console.log(response);
+                    //console.log('Interceptor responseError:');
+                    //console.log(response);
                     if (response.status === 401) {
                         $window.location.href = '/signin?err=401';
                     }

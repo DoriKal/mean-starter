@@ -8,6 +8,8 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var passport = require('passport');
 var helmet = require('helmet');
+var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
 
 module.exports = function (app, express) {
 
@@ -31,16 +33,26 @@ module.exports = function (app, express) {
 
 
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({extended: false}));
 
     // CookieParser should be above session
     app.use(cookieParser(configApp.secret));
 
-    // Session Storage
+    /*
+     * Session Storage
+     * Usamos connect-mongo para almacenar las sesiones en mongo, debido a que en producción
+     * nunca se debe almacenar en memoria (MemoryStore es por defecto).
+     * Por defecto usamos la conexión de mongoose
+     * resave y saveUninitialized estan deprecated y deben ser definidas
+     */
     app.use(session({
         secret: configApp.secret,
+        cookie: {maxAge: configApp.maxAge},
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        store: new MongoStore({
+            mongoose_connection: mongoose.connection
+        })
     }));
 
     // use passport session

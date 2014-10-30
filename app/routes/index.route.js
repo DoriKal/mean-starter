@@ -1,3 +1,5 @@
+var auth = require('../../config/authorization');
+
 /**
  * Route para el index, no se implementa un controller
  * @param router
@@ -11,4 +13,9 @@ module.exports = function (router) {
         var view = (req.isAuthenticated()) ? 'indexng' : 'index';
         res.render(view);
     });
+
+    router.route('/database')
+        .get(auth.requiresLogin, auth.requiresAdmin,  function (req, res) {
+            res.send('database');
+        });
 }

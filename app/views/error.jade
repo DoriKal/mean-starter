@@ -10,15 +10,18 @@ html(lang="en")
         br
         br
         div.container.text-center
-            div.jumbotron
-                h2 Error #{error.status}
-                h1  #{error.message}
-                if (process.env.NODE_ENV === 'development')
+            div.row
+                div.jumbotron
+                    h1 #{error.status}
+                        small Error
+                    h2  #{error.message}
+                    if (process.env.NODE_ENV === 'development')
+                        hr
+                        h5.text-left
+                            small #{error.stack}
                     hr
-                    h5.text-left
-                        small #{error.stack}
-                hr
-                a(href="/" class="btn btn-lg btn-btn-primary") Ir a la página principal
+                    p
+                        a(href="/" class="btn btn-primary btn-lg" role="button") Ir a la página principal
 
     if (process.env.NODE_ENV === 'development')
         script(src="http://localhost:35729/livereload.js")

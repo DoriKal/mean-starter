@@ -95,11 +95,13 @@ Tareas
     - npm install passport --save
     - npm install passport-local --save
     - npm install express-session --save
+    - npm install connect-mongo --save
     - npm install connect-flash --save
     - npm install bcrypt-nodejs --save
     - npm install underscore --save
     - npm install helmet --save     -> ayuda a controlar los request en caso ataques
-    - npm install connect-roles --save      -> para el control de authorization
+    - (removed) npm uninstall connect-roles --save      -> para el control de authorization
+    - (removed) npm uninstall mongo-edit --save     -> herramienta para editar los datos de mongo (solo para ADMIN)
     - npm uninstall less-middleware
     - npm uninstall serve-favicon 
     - npm install grunt --save-dev
@@ -120,6 +122,6 @@ Tareas
 
 A tener en cuenta:
 - Las rutas definidas en la propiedad files en las tareas de grunt 'watch' y 'nodemon' no deben solaparse entre si, sino tendremos un error del tipo '...port 35729 is already in use by another process...'.
-
+- Si se esta unsado MONGO-EDIT se debe sincronizar la configuración la aplicación y mongo-edit revisar https://www.npmjs.org/package/mongo-edit
 
 
